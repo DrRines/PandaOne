@@ -27,8 +27,12 @@ while True:
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         sub_face = frame[y:y+h, x:x+w]
-        face_file_name = "faces/face_" + str(time.time()) + ".jpg"
-        cv2.imwrite(face_file_name, sub_face)
+
+        write_ok = int(time.time()) % 2 == 0
+
+        if write_ok:
+            face_file_name = "faces/face_" + str(int(time.time())) + ".jpg"
+            cv2.imwrite(face_file_name, sub_face)
 
 
     # Display the resulting frame
