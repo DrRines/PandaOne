@@ -1,5 +1,7 @@
 import cv2
 import sys
+import numpy as np
+import time
 
 cascPath = sys.argv[1]
 faceCascade = cv2.CascadeClassifier(cascPath)
@@ -21,9 +23,13 @@ while True:
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
-    # Draw a rectangle around the faces
+    # Draw a rectangle around the faces & save face
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        sub_face = frame[y:y+h, x:x+w]
+        face_file_name = "faces/face_" + str(time.time()) + ".jpg"
+        cv2.imwrite(face_file_name, sub_face)
+
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
